@@ -1,0 +1,72 @@
+<canvas id="gc" width="400" height="400" ;></canvas>
+<script>
+window.onload = function() {
+    canv = document.getElementById("gc");
+    ctx = canv.getContext("2d");
+    document.addEventListener("keydown",keyPush);
+    setInterval(game,1000/15);
+}
+positionX=positionY=10;
+gridSize=tileSize=20;
+appleX=appleY=15;
+xSpeed=ySpeed=0;
+trail=[];
+tail = 5;
+
+function game() {
+    positionX+=xSpeed;
+    positionY+=ySpeed;
+	
+    if(positionX<0) {
+        positionX= 19;
+    }
+    if(positionX>tileSize-1) {
+        positionX= 0;
+    }
+    if(positionY<0) {
+        positionY= 19;
+    }
+    if(positionY>tileSize-1) {
+        positionY= 0;
+    }
+	
+    ctx.fillStyle="black";
+    ctx.fillRect(0,0,canv.width,canv.height);
+    ctx.fillStyle="lime";
+    for(var i=0;i<trail.length;i++) {
+        ctx.fillRect(trail[i].x*gridSize,trail[i].y*gridSize,gridSize-2,gridSize-2);
+        if(trail[i].x==positionX && trail[i].y==positionY) {
+            tail = 5;
+        }
+    }
+    trail.push({x:positionX,y:positionY});
+	//console.log(trail);
+    while(trail.length>tail) {
+    trail.shift();
+    }
+ 
+    if(appleX==positionX && appleY==positionY) {
+        tail++;
+        appleX=Math.floor(Math.random()*tileSize);
+        appleY=Math.floor(Math.random()*tileSize);
+    }
+    ctx.fillStyle="red";
+    ctx.fillRect(appleX*gridSize,appleY*gridSize,gridSize-2,gridSize-2);
+}
+function keyPush(evt) {
+    switch(evt.keyCode) {
+        case 37:
+            xSpeed=-1;ySpeed=0;
+            break;
+        case 38:
+            xSpeed=0;ySpeed=-1;
+            break;
+        case 39:
+            xSpeed=1;ySpeed=0;
+            break;
+        case 40:
+            xSpeed=0;ySpeed=1;
+            break;
+    }
+}
+</script>

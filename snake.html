@@ -1,4 +1,15 @@
+<html>
+	
+<title>
+Snake Game
+</title>
+
+<body>
+
+<div align="center">
 <canvas id="gc" width="400" height="400" ;></canvas>
+</div>
+
 <script>
 window.onload = function() {
     canv = document.getElementById("gc");
@@ -19,6 +30,7 @@ function game() {
 	
     if(positionX<0) {
         positionX= 19;
+		//console.log(canv.width);
     }
     if(positionX>tileSize-1) {
         positionX= 0;
@@ -70,3 +82,6 @@ function keyPush(evt) {
     }
 }
 </script>
+
+</body>
+</html>
